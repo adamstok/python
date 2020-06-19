@@ -28,12 +28,10 @@ router.register(r'movies',MovieViewSet)
 router.register(r'persons',PersonViewSet)
 
 
-
-
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     #path('movies/', MovieListView.as_view()),
     #path('movies/<int:pk>/', MovieView.as_view()),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('accounts/', include('rest_framework.urls', namespace='rest_framework'))
 ]
