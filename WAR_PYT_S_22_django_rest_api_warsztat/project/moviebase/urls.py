@@ -18,12 +18,14 @@ from django.urls import path, include
 from rest_framework import routers
 from showtimes import views
 from showtimes.views import CinemaViewSet,ScreeningViewSet
-from movielist.views import MovieListView, MovieView
+#from movielist.views import MovieListView, MovieView
+from movielist.views import MovieViewSet,PersonViewSet
 
 router = routers.DefaultRouter()
 router.register(r'cinemas',CinemaViewSet)
 router.register(r'screenings',ScreeningViewSet)
-
+router.register(r'movies',MovieViewSet)
+router.register(r'persons',PersonViewSet)
 
 
 
@@ -31,7 +33,7 @@ router.register(r'screenings',ScreeningViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('movies/', MovieListView.as_view()),
-    path('movies/<int:pk>/', MovieView.as_view()),
+    #path('movies/', MovieListView.as_view()),
+    #path('movies/<int:pk>/', MovieView.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
