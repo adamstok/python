@@ -18,10 +18,9 @@ def check_files(file):
     return False
 
 try:
-    if sys.argv[1] in ['h','-h','--help']:
-        print(help_msg)
+    sys.argv[1]
 except:
-    pass
+    print(help_msg)
 
 
 
