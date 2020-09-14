@@ -1,0 +1,3 @@
+[submodule "exercises"]
+	path = exercises
+	url = git@github.com:adamstok/exercises.git
