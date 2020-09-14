@@ -31,6 +31,9 @@ if sys.argv[1] == '-a' and sys.argv[2] in allowed:
         if check_files(f):
             convert_file(f, sys.argv[2])
 
+if sys.argv[1] in ['h','-h','--help']:
+    print(help_msg)
+
 
 
 
