@@ -2,8 +2,13 @@ from PIL import Image
 import sys
 import os
 
-help_msg =  "Allowed files conversions: JPEG, PNG, BMP <=> JPEG, PNG, BMP "
-files = os.listdir()
+help_msg =  """
+Allowed files conversions: JPEG, PNG, BMP <=> JPEG, PNG, BMP 
+Usage:
+    python convert.py -a <new_fileformat>  (convert all files in the directory to the desired format)
+    python convert.py <file1> <file2> (convert file1 to file2 )
+"""
+files = os.listdir(".")
 
 def check_files(file):
     allowed = ['jpeg','png','bmp'] 
@@ -12,7 +17,11 @@ def check_files(file):
         return True
     return False
 
-
+try:
+    if sys.argv[1] in ['h','-h','--help']:
+        print(help_msg)
+except:
+    pass
 
 
 
