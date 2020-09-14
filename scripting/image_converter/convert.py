@@ -9,19 +9,27 @@ Usage:
     python convert.py <file1> <file2> (convert file1 to file2 )
 """
 files = os.listdir(".")
+allowed = ['jpeg','png','bmp'] 
+
 
 def check_files(file):
-    allowed = ['jpeg','png','bmp'] 
     file_format = file.split('.')[-1].lower()
     if file_format in allowed:
         return True
     return False
 
-try:
-    sys.argv[1]
-except:
-    print(help_msg)
 
+def convert_file(file,new_format):
+    name = file.split('.')[0]
+    new_name = f'{name}.{new_format}'
+    Image.open(file).save(new_name)
+    print(f'{file} -> {new_name}')
+
+
+if sys.argv[1] == '-a' and sys.argv[2] in allowed:
+    for f in files:
+        if check_files(f):
+            convert_file(f, sys.argv[2])
 
 
 
