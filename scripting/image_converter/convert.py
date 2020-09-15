@@ -50,11 +50,16 @@ def check_files(file):
 def convert_file(file,new_format):
     name = file.split('.')[0]
     new_name = f'{name}.{new_format}'
+    if new_name in files:
+        print(f'{new_name} already exist')
+        return False
     try:
         Image.open(file).save(new_name)
         print(f'{file} -> {new_name}')
+        return True
     except:
         print('An error occurred')
+        return False
 
 
 # if check_args() == True:
