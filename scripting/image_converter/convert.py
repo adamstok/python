@@ -5,6 +5,7 @@ import os
 def check_newsize(ar):
     try:
         size = ar.split('x')
+        # TODO: split by '.' for ratio (ex: ratio=0.5)
         if len(size) == 2 and size[0].isdecimal() and size[1].isdecimal():
             return size
         else:
