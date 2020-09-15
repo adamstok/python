@@ -7,22 +7,23 @@ Allowed files conversions: JPEG, PNG, BMP <=> JPEG, PNG, BMP
 Usage:
     python convert.py -a <new_fileformat>  (convert all files in the directory to the desired format)
     python convert.py -r <new_size> (resize image with ex: new_size = 200x300)
+    python convert.py -ar <new_size> (resize all images with ex: new_size = 200x300)
     python convert.py <file1> <file2> (convert file1 to file2 )
 """
 files = os.listdir(".")
 allowed = ['jpeg','png','bmp'] 
-arguments = ['-a','-r']
+arguments = ['-a','-r','-ar']
 
 def check_args():
     listed = [x for x in sys.argv]
     if len(listed)<2:
-        print(help_msg)
+        return help_msg
     elif listed[1] in arguments or check_files(listed[1]):
         return listed[1:]
     elif  listed[2] in allowed or check_files(listed[2]):
         return listed[1:]
     else:
-        print(help_msg)
+        return help_msg
 
 
     # try:
