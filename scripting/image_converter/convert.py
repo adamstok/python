@@ -72,7 +72,7 @@ if type(check_args()) == list:
         for f in files:
             convert_file(f,todo[1])
             i += 1
-    if  todo[0] == '-a' and len(files) == 0:
+    if  todo[0] in '-ar' and len(files) == 0:
         print('Nothing to do ! Check the files')
 
 
