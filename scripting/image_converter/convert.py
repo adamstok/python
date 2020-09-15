@@ -2,19 +2,6 @@ from PIL import Image
 import sys
 import os
 
-help_msg =  """
-Allowed files conversions: JPEG, PNG, BMP <=> JPEG, PNG, BMP 
-Usage:
-    python convert.py -a <new_fileformat>  (convert all files in the directory to the desired format)
-    python convert.py -r <new_size> (resize image with ex: new_size = 200x300)
-    python convert.py -ar <new_size> (resize all images with ex: new_size = 200x300)
-    python convert.py <file1> <file2> (convert file1 to file2 )
-"""
-files = os.listdir(".")
-allowed = ['jpeg','png','bmp'] 
-arguments = ['-a','-r','-ar']
-
-
 def check_newsize(ar):
     try:
         size = ar.split('x')
@@ -66,11 +53,26 @@ def convert_file(file,new_format):
         return False
 
 
+help_msg =  """
+Allowed files conversions: JPEG, PNG, BMP <=> JPEG, PNG, BMP 
+Usage:
+    python convert.py -a <new_fileformat>  (convert all files in the directory to the desired format)
+    python convert.py -r <new_size> (resize image with ex: new_size = 200x300)
+    python convert.py -ar <new_size> (resize all images with ex: new_size = 200x300)
+    python convert.py <file1> <file2> (convert file1 to file2 )
+"""
+files = list(filter(lambda x: check_files(x) == True , os.listdir(".")))
+allowed = ['jpeg','png','bmp'] 
+arguments = ['-a','-r','-ar']
+
 
 if type(check_args()) == list:
     todo = check_args()
-    if todo[0] == 'a':
+    if todo[0] == '-a' and len(files)>0:
         for f in files:
             convert_file(f,todo[1])
+            i += 1
+    if  todo[0] == '-a' and len(files) == 0:
+        print('Nothing to do ! Check the files')
 
-    
+
