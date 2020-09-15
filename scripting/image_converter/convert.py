@@ -53,6 +53,13 @@ def convert_file(file,new_format):
         return False
 
 
+def resize_files_by_wh(file,new_size):
+    pass
+
+def resize_files_by_ratio(file, new_size):
+    pass
+
+
 help_msg =  """
 Allowed files conversions: JPEG, PNG, BMP <=> JPEG, PNG, BMP 
 Usage:
@@ -71,8 +78,7 @@ if type(check_args()) == list:
     if todo[0] == '-a' and len(files)>0:
         for f in files:
             convert_file(f,todo[1])
-            i += 1
-    if  todo[0] in '-ar' and len(files) == 0:
+    elif  todo[0] in '-ar' and len(files) == 0:
         print('Nothing to do ! Check the files')
 
 
