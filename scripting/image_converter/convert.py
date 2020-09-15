@@ -4,10 +4,10 @@ import os
 
 def check_newsize(ar):
     try:
-        size = ar.split('x')
+        size =  ar.split('x')
         # TODO: split by '.' for ratio (ex: ratio=0.5)
         if len(size) == 2 and size[0].isdecimal() and size[1].isdecimal():
-            return size
+            return [int(x) for x in size]
         else:
             print(help_msg)
             return False
@@ -82,10 +82,10 @@ Usage:
     python convert.py -ar <new_size> (resize all images with ex: new_size = 200x300)
     python convert.py <file1> <file2> (convert file1 to file2 )
 """
-files = list(filter(lambda x: check_files(x) == True , os.listdir(".")))
+
 allowed = ['jpeg','png','bmp'] 
 arguments = ['-a','-r','-ar']
-
+files = list(filter(lambda x: check_files(x), os.listdir('.')))
 
 if type(check_args()) == list:
     todo = check_args()
@@ -94,5 +94,8 @@ if type(check_args()) == list:
             convert_file(f,todo[1])
     elif  todo[0] in '-ar' and len(files) == 0:
         print('Nothing to do ! Check the files')
+    elif todo[0] == '-ar' and len(files)>0:
+        for f in files:
+            resize_files_by_wh(f,check_newsize(todo[1]))
 
 
