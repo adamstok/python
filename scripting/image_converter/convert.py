@@ -14,13 +14,23 @@ files = os.listdir(".")
 allowed = ['jpeg','png','bmp'] 
 arguments = ['-a','-r','-ar']
 
+
+def check_newsize(ar):
+    try:
+        size = ar.split('x')
+        if len(size) == 2 and size[0].isdecimal() and size[1].isdecimal():
+            return size
+        else:
+            return help_msg
+    except:
+        return help_msg
+
+
 def check_args():
     listed = [x for x in sys.argv]
     if len(listed)<2:
         return help_msg
-    elif listed[1] in arguments or check_files(listed[1]):
-        return listed[1:]
-    elif  listed[2] in allowed or check_files(listed[2]):
+    elif (listed[1] == '-a' and listed[2] in allowed) or (listed[1] == '-ar' and type(check_newsize(listed[2])) == list):
         return listed[1:]
     else:
         return help_msg
