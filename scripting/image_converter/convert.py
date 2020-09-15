@@ -21,21 +21,25 @@ def check_newsize(ar):
         if len(size) == 2 and size[0].isdecimal() and size[1].isdecimal():
             return size
         else:
-            return help_msg
+            print(help_msg)
+            return False
     except:
-        return help_msg
+        print(help_msg)
+        return False
 
 
 def check_args():
     listed = [x for x in sys.argv]
     if len(listed) <= 2:
-        return help_msg
+        print(help_msg)
+        return False
     elif (listed[1] == '-a' and listed[2] in allowed) or (listed[1] == '-ar' and type(check_newsize(listed[2])) == list):
         return listed[1:]
     elif check_files(listed[1]) and check_files(listed[2]):
         return listed[1:]
     else:
-        return help_msg
+        print(help_msg)
+        return False
 
 
 def check_files(file):
@@ -51,7 +55,7 @@ def convert_file(file,new_format):
     name = file.split('.')[0]
     new_name = f'{name}.{new_format}'
     if new_name in files:
-        print(f'{new_name} already exist')
+        print(f'Not converting {new_name}. The file already exist')
         return False
     try:
         Image.open(file).save(new_name)
@@ -62,15 +66,11 @@ def convert_file(file,new_format):
         return False
 
 
-# if check_args() == True:
-#     if sys.argv[1] == '-a' and sys.argv[2] in allowed:
-#         i = 0
-#         for f in files:
-#             if check_files(f):
-#                 convert_file(f, sys.argv[2])
-#                 i+=1
-#             if i == 0:
-#                 print('Nothing to do')
-#     elif sys.argv[1] == '-r' and sys.argv[2].split('x')[0].isdecimal() and sys.argv[2].split('x')[-1].isdecimal():
 
-print(check_args())
+if type(check_args()) == list:
+    todo = check_args()
+    if todo[0] == 'a':
+        for f in files:
+            convert_file(f,todo[1])
+
+    
