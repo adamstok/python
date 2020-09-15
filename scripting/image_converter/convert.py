@@ -32,16 +32,10 @@ def check_args():
         return help_msg
     elif (listed[1] == '-a' and listed[2] in allowed) or (listed[1] == '-ar' and type(check_newsize(listed[2])) == list):
         return listed[1:]
+    elif check_files(listed[1]) and check_files(listed[2]):
+        return listed[1:]
     else:
         return help_msg
-
-
-    # try:
-    #     sys.argv[1],sys.argv[2]
-    #     return True
-    # except:
-    #     print(help_msg)
-    #     return False
 
 
 def check_files(file):
