@@ -55,7 +55,20 @@ def convert_file(file,new_format):
 
 
 def resize_files_by_wh(file,new_size):
-    pass
+    size = tuple(new_size)
+    new_name = f'resized_{file}'
+    if new_name in files:
+        print(f'Not converting {new_name}. The file already exist')
+        return False
+    try:
+        Image.open(file).resize(size)
+        print(f'{file} -> {new_name}')
+        return True
+    except:
+        print('An error occurred')
+        return False
+
+
 
 def resize_files_by_ratio(file, new_size):
     pass
