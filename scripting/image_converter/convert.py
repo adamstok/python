@@ -28,7 +28,7 @@ def check_newsize(ar):
 
 def check_args():
     listed = [x for x in sys.argv]
-    if len(listed)<2:
+    if len(listed) <= 2:
         return help_msg
     elif (listed[1] == '-a' and listed[2] in allowed) or (listed[1] == '-ar' and type(check_newsize(listed[2])) == list):
         return listed[1:]
