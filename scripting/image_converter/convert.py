@@ -55,13 +55,16 @@ def convert_file(file,new_format):
 
 
 def resize_files_by_wh(file,new_size):
-    size = tuple(new_size)
+    # size = tuple(new_size)
     new_name = f'resized_{file}'
+    file_format = file.split('.')[-1]
     if new_name in files:
         print(f'Not converting {new_name}. The file already exist')
         return False
     try:
-        Image.open(file).resize(size)
+        img = Image.open(file)
+        resized_img = img.resize(new_size)
+        resized_img.save(new_name, file_format, optimize=True)
         print(f'{file} -> {new_name}')
         return True
     except:
@@ -95,7 +98,7 @@ if type(check_args()) == list:
     elif  todo[0] in '-ar' and len(files) == 0:
         print('Nothing to do ! Check the files')
     elif todo[0] == '-ar' and len(files)>0:
+        new_size = tuple([int(x) for x in check_args()[-1].split('x')])
         for f in files:
-            resize_files_by_wh(f,check_newsize(todo[1]))
-
+            resize_files_by_wh(f,new_size)
 
