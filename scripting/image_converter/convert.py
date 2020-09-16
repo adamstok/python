@@ -55,7 +55,6 @@ def convert_file(file,new_format):
 
 
 def resize_files_by_wh(file,new_size):
-    # size = tuple(new_size)
     new_name = f'resized_{file}'
     file_format = file.split('.')[-1]
     if new_name in files:
