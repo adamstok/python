@@ -9,7 +9,7 @@ def check_newsize(ar):
             return [int(x) for x in size]
         else:
             try:
-                if ar.replace('.','').isdecimal():
+                if float(ar):
                     return list(ar)
             except:
                 print(help_msg)
