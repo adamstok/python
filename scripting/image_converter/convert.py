@@ -87,7 +87,7 @@ def resize_files_by_ratio(file, new_size):
         width, height = img.size
         width = width * new_size
         height = height * new_size
-        resized_img = img.resize((width,height))
+        resized_img = img.resize((int(width),int(height)))
         resized_img.save(new_name, file_format, optimize=True)
         print(f'{file} -> {new_name}')
         return True
@@ -126,4 +126,3 @@ if type(check_args()) == list:
             for f in files:
                 resize_files_by_ratio(f,new_size)
 
-print(check_args())
