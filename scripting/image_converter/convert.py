@@ -5,22 +5,18 @@ import os
 def check_newsize(ar):
     try:
         size =  ar.split('x')
-        # TODO: split by '.' for ratio (ex: ratio=0.5)
         if len(size) == 2 and size[0].isdecimal() and size[1].isdecimal():
             return [int(x) for x in size]
-        # else:
-        #     print(help_msg)
-        #     return False
+        else:
+            try:
+                if ar.replace('.','').isdecimal():
+                    return list(ar)
+            except:
+                print(help_msg)
+                return False
     except:
-        # print(help_msg)
-        # return False
-        try:
-            if ar.replace('.','').isdigit():
-                return tuple(ar)
-        except:
-            print(help_msg)
-            return False
-
+        print(help_msg)
+        return False
 
 
 
@@ -81,7 +77,23 @@ def resize_files_by_wh(file,new_size):
 
 
 def resize_files_by_ratio(file, new_size):
-    pass
+    new_name = f'resized_{file}'
+    file_format = file.split('.')[-1]
+    if new_name in files:
+        print(f'Not converting {new_name}. The file already exist')
+        return False
+    try:
+        img = Image.open(file)
+        width, height = img.size
+        width = width * new_size
+        height = height * new_size
+        resized_img = img.resize((width,height))
+        resized_img.save(new_name, file_format, optimize=True)
+        print(f'{file} -> {new_name}')
+        return True
+    except:
+        print('An error occurred')
+        return False
 
 
 help_msg =  """
@@ -105,7 +117,13 @@ if type(check_args()) == list:
     elif  todo[0] in '-ar' and len(files) == 0:
         print('Nothing to do ! Check the files')
     elif todo[0] == '-ar' and len(files)>0:
-        new_size = tuple([int(x) for x in check_args()[-1].split('x')])
-        for f in files:
-            resize_files_by_wh(f,new_size)
+        try:
+            new_size = tuple([int(x) for x in check_args()[-1].split('x')])
+            for f in files:
+                resize_files_by_wh(f,new_size)
+        except:
+            new_size = float(check_args()[-1])
+            for f in files:
+                resize_files_by_ratio(f,new_size)
 
+print(check_args())
