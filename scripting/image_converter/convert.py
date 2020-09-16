@@ -125,7 +125,7 @@ Usage:
     python convert.py -r <file> <new_size> (resize image with ex: new_size = 200x300)
     python convert.py <file1> <file2> (convert file1 to file2 )
 """
-# TODO: options: -r , <file1> <file2>, all img to one pdf, one img to one pdf
+# TODO: options: -r , <file1> <file2>, one img to one pdf
 
 allowed = ['jpeg','png','bmp'] 
 arguments = ['-ai','-r','-ap','-ar']
