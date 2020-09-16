@@ -100,12 +100,13 @@ help_msg =  """
 Allowed files conversions: JPEG, PNG, BMP <=> JPEG, PNG, BMP 
 Usage:
     python convert.py -a <new_fileformat>  (convert all files in the directory to the desired format)
-    python convert.py -r <new_size> (resize image with ex: new_size = 200x300)
+    python convert.py -r <file> <new_size> (resize image with ex: new_size = 200x300)
     python convert.py -ar <new_size> (resize all images with ex: new_size = 200x300)
     python convert.py <file1> <file2> (convert file1 to file2 )
 """
+# TODO: options: -r , <file1> <file2>, all img to one pdf, one img to one pdf
 
-allowed = ['jpeg','png','bmp'] 
+allowed = ['jpeg','png','bmp','pfd'] 
 arguments = ['-a','-r','-ar']
 files = list(filter(lambda x: check_files(x), os.listdir('.')))
 
