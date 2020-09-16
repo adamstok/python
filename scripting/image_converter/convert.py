@@ -25,7 +25,7 @@ def check_args():
     if len(listed) <= 2:
         print(help_msg)
         return False
-    elif (listed[1] == '-a' and listed[2] in allowed) or (listed[1] == '-ar' and type(check_newsize(listed[2])) == list):
+    elif (listed[1] == '-ai' and listed[2] in allowed) or (listed[1] == '-ar' and type(check_newsize(listed[2])) == list):
         return listed[1:]
     elif check_files(listed[1]) and check_files(listed[2]):
         return listed[1:]
@@ -99,20 +99,21 @@ def resize_files_by_ratio(file, new_size):
 help_msg =  """
 Allowed files conversions: JPEG, PNG, BMP <=> JPEG, PNG, BMP 
 Usage:
-    python convert.py -a <new_fileformat>  (convert all files in the directory to the desired format)
+    python convert.py -ai <new_fileformat>  (convert all files in the directory to the desired format)
+    python convert.py -ap  (convert all imgages to one pdf)
+    python convert.py -ar <new_size> (resize all images with ex: new_size = 200x300 or ex: 0.5 in case of ratio)
     python convert.py -r <file> <new_size> (resize image with ex: new_size = 200x300)
-    python convert.py -ar <new_size> (resize all images with ex: new_size = 200x300)
     python convert.py <file1> <file2> (convert file1 to file2 )
 """
 # TODO: options: -r , <file1> <file2>, all img to one pdf, one img to one pdf
 
-allowed = ['jpeg','png','bmp','pfd'] 
-arguments = ['-a','-r','-ar']
+allowed = ['jpeg','png','bmp'] 
+arguments = ['-ai','-r','-ar']
 files = list(filter(lambda x: check_files(x), os.listdir('.')))
 
 if type(check_args()) == list:
     todo = check_args()
-    if todo[0] == '-a' and len(files)>0:
+    if todo[0] == '-ai' and len(files)>0:
         for f in files:
             convert_file(f,todo[1])
     elif  todo[0] in '-ar' and len(files) == 0:
