@@ -22,7 +22,7 @@ def check_newsize(ar):
 
 def check_args():
     listed = [x for x in sys.argv]
-    if len(listed) <=2 and listed[1] == '-ap':
+    if len(listed) == 2 and listed[1] == '-ap':
         return ['-ap']
     elif len(listed) >=2 and listed[1] == '-ap':
         print(help_msg)
@@ -69,8 +69,8 @@ def convert_to_pdf(file_name,files_list):
         print(f'Not converting - The file already exist')
         return False
     try:
-        Image.open(files_list[0])
-        Image.save(file_name,'pdf', resolution=100.0, save_all=True, append_images=files_list)
+        img = files_list[0]
+        img.save(file_name,'pdf', resolution=100.0, save_all=True, append_images=files_list)
         print(f'{file_name} saved')
         return True
     except:
