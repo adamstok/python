@@ -8,12 +8,20 @@ def check_newsize(ar):
         # TODO: split by '.' for ratio (ex: ratio=0.5)
         if len(size) == 2 and size[0].isdecimal() and size[1].isdecimal():
             return [int(x) for x in size]
-        else:
+        # else:
+        #     print(help_msg)
+        #     return False
+    except:
+        # print(help_msg)
+        # return False
+        try:
+            if ar.replace('.','').isdigit():
+                return tuple(ar)
+        except:
             print(help_msg)
             return False
-    except:
-        print(help_msg)
-        return False
+
+
 
 
 def check_args():
