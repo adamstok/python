@@ -22,13 +22,20 @@ def check_newsize(ar):
 
 def check_args():
     listed = [x for x in sys.argv]
-    if len(listed) <= 2:
+    if len(listed) <=2 and listed[1] == '-ap':
+        return ['-ap']
+    elif len(listed) >=2 and listed[1] == '-ap':
+        print(help_msg)
+        return False
+    elif len(listed) <= 2:
         print(help_msg)
         return False
     elif (listed[1] == '-ai' and listed[2] in allowed) or (listed[1] == '-ar' and type(check_newsize(listed[2])) == list):
         return listed[1:]
     elif check_files(listed[1]) and check_files(listed[2]):
         return listed[1:]
+    elif listed[1] == '-ap':
+        return ['-ap',]
     else:
         print(help_msg)
         return False
@@ -52,6 +59,19 @@ def convert_file(file,new_format):
     try:
         Image.open(file).save(new_name)
         print(f'{file} -> {new_name}')
+        return True
+    except:
+        print('An error occurred')
+        return False
+
+def convert_to_pdf(file_name,files_list):
+    if file_name in os.listdir('.'):
+        print(f'Not converting - The file already exist')
+        return False
+    try:
+        Image.open(files_list[0])
+        Image.save(file_name,'pdf', resolution=100.0, save_all=True, append_images=files_list)
+        print(f'{file_name} saved')
         return True
     except:
         print('An error occurred')
@@ -108,7 +128,7 @@ Usage:
 # TODO: options: -r , <file1> <file2>, all img to one pdf, one img to one pdf
 
 allowed = ['jpeg','png','bmp'] 
-arguments = ['-ai','-r','-ar']
+arguments = ['-ai','-r','-ap','-ar']
 files = list(filter(lambda x: check_files(x), os.listdir('.')))
 
 if type(check_args()) == list:
@@ -116,7 +136,7 @@ if type(check_args()) == list:
     if todo[0] == '-ai' and len(files)>0:
         for f in files:
             convert_file(f,todo[1])
-    elif  todo[0] in '-ar' and len(files) == 0:
+    elif  todo[0] == '-ar' and len(files) == 0:
         print('Nothing to do ! Check the files')
     elif todo[0] == '-ar' and len(files)>0:
         try:
@@ -127,4 +147,8 @@ if type(check_args()) == list:
             new_size = float(check_args()[-1])
             for f in files:
                 resize_files_by_ratio(f,new_size)
+    elif todo[0] == '-ap':
+        files_list = list(map(lambda x: Image.open(x) ,files))
+        file_name = files[0].split('.')[0]+'.pdf'
+        convert_to_pdf(file_name,files_list)
 
