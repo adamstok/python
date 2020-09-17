@@ -32,17 +32,25 @@ def check_args():
         return False
     elif (listed[1] == '-ai' and listed[2] in allowed) or (listed[1] == '-ar' and type(check_newsize(listed[2])) == list):
         return listed[1:]
-    elif check_files(listed[1]) and check_files(listed[2]):
+    elif check_input_files(listed[1]) and check_output_files(listed[2]):
         return listed[1:]
     else:
         print(help_msg)
         return False
 
 
-def check_files(file):
+def check_input_files(file):
     try:
         file_format = file.split('.')[-1].lower()
         if file_format in allowed:
+            return True
+    except:
+        return False
+
+def check_output_files(file):
+    try:
+        file_format = file.split('.')[-1].lower()
+        if file_format in allowed_output:
             return True
     except:
         return False
@@ -126,8 +134,9 @@ Usage:
 # TODO: options: -r , <file1> <file2>, one img to one pdf
 
 allowed = ['jpeg','png','bmp'] 
+allowed_output = ['jpeg','png','bmp','pdf'] 
 arguments = ['-ai','-r','-ap','-ar']
-files = list(filter(lambda x: check_files(x), os.listdir('.')))
+files = list(filter(lambda x: check_input_files(x), os.listdir('.')))
 
 if type(check_args()) == list:
     todo = check_args()
