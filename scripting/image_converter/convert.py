@@ -182,6 +182,8 @@ if type(check_args()) == list:
         convert_to_pdf(file_name,files_list)
     elif todo[0] == '-ap' and len(files) == 0:
         print('No files detected')
+    elif check_input_files(todo[0]) and check_output_files(todo[1]):
+        convert_one_to_one(todo[0], todo[1])
     # TODO: first if should be checking the len(files)
 
 
