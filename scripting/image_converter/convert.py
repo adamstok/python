@@ -34,8 +34,6 @@ def check_args():
         return listed[1:]
     elif check_files(listed[1]) and check_files(listed[2]):
         return listed[1:]
-    elif listed[1] == '-ap':
-        return ['-ap',]
     else:
         print(help_msg)
         return False
@@ -147,8 +145,12 @@ if type(check_args()) == list:
             new_size = float(check_args()[-1])
             for f in files:
                 resize_files_by_ratio(f,new_size)
-    elif todo[0] == '-ap':
+    elif todo[0] == '-ap' and len(files) > 0:
         files_list = list(map(lambda x: Image.open(x) ,files))
         file_name = files[0].split('.')[0]+'.pdf'
         convert_to_pdf(file_name,files_list)
+    elif todo[0] == '-ap' and len(files) == 0:
+        print('No files detected')
+    # TODO: first if should be checking the len(files)
+
 
