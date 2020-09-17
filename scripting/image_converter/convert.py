@@ -70,6 +70,28 @@ def convert_file(file,new_format):
         print('An error occurred')
         return False
 
+def convert_one_to_one(file1,file2):
+    file_type = file2.split('.')[-1]
+    if file2 in files:
+        print(f'Not converting {file2}. The file already exist')
+        return False
+    try:
+        if file_type != 'pdf':
+            Image.open(file1).save(file2)
+            print(f'{file} -> {new_name}')
+            return True
+        else:
+            Image.open(file1)
+            Image.save(file2,file_type, resolution=100.0, save_all=True)
+            print(f'{file} -> {new_name}')
+            return True
+
+    except:
+        print('An error occurred')
+        return False
+
+
+
 def convert_to_pdf(file_name,files_list):
     if file_name in os.listdir('.'):
         print(f'Not converting - The file already exist')
