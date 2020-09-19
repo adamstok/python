@@ -125,7 +125,7 @@ Usage:
     python convert.py -r <file> <new_size> (resize image with ex: new_size = 200x300, or 0.5 for the ratio)
     python convert.py <file1> <file_format> (convert file1 to formatted file1 )
 """
-# TODO: options: -r file ratio, convert music, docs - excel
+# TODO: options: convert music, docs - excel
 
 allowed = ['jpeg','png','bmp'] 
 allowed_output = ['jpeg','png','bmp','pdf'] 
