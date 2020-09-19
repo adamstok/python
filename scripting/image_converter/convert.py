@@ -70,9 +70,6 @@ def convert_file(file,new_format):
         f_format = file.split('.')[-1]
         if f_format == 'wav':
             try:
-                # sound = AudioSegment.from_mp3(file)
-                # sound = AudioSegment.export(new_name, format="wav")
-                # print(f'{file} -> {new_name}')
                 sound = AudioSegment.from_file(file,format='mp3').export(new_name,format='wav')
                 print(f'{file} -> {new_name}')
 
@@ -80,9 +77,6 @@ def convert_file(file,new_format):
                 print('mp3 to wav ERROR')
         else:
             try:
-                # sound = AudioSegment.from_wav(file)
-                # sound = AudioSegment.export(new_name, format="mp3")
-                # print(f'{file} -> {new_name}')
                 sound = AudioSegment.from_file(file,format='wav').export(new_name,format='mp3')
                 print(f'{file} -> {new_name}')
 
@@ -156,8 +150,6 @@ def convert_music(f_format):
             if f_format == 'wav':
                 name = name + '.wav'
                 try:
-                    # sound = AudioSegment.from_mp3(song)
-                    # sound = AudioSegment.export(dst, format="wav")
                     sound = AudioSegment.from_file(song,format='mp3').export(name,format='wav')
                     print(f'{song} -> {name}')
                 except:
@@ -165,8 +157,6 @@ def convert_music(f_format):
             else:
                 name = name + '.mp3'
                 try:
-                    # sound = AudioSegment.from_wav(song)
-                    # sound = AudioSegment.export(dst, format="mp3")
                     print(f'{song} -> {name}')
                     sound = AudioSegment.from_file(song,format='wav').export(name,format='mp3')
                 except:
