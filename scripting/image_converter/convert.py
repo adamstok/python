@@ -34,6 +34,8 @@ def check_args():
         return listed[1:]
     elif check_input_files(listed[1]) and listed[2] in allowed_output:
         return listed[1:]
+    elif len(listed) == 4 and listed[1] == '-r' and check_input_files(listed[2]) and check_newsize(listed[3]):
+        return listed[1:]
     else:
         print(help_msg)
         return False
