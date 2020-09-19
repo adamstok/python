@@ -72,14 +72,12 @@ def convert_file(file,new_format):
             try:
                 sound = AudioSegment.from_file(file,format='mp3').export(new_name,format='wav')
                 print(f'{file} -> {new_name}')
-
             except:
                 print('mp3 to wav ERROR')
         else:
             try:
                 sound = AudioSegment.from_file(file,format='wav').export(new_name,format='mp3')
                 print(f'{file} -> {new_name}')
-
             except:
                 print('wav to mp3 ERROR')
 
@@ -145,23 +143,8 @@ def convert_music(f_format):
         return False
     else:
         for song in music_files:
-            name = song.split('.')[0]
-            dst = f'converted_{name}.{f_format}'
-            if f_format == 'wav':
-                name = name + '.wav'
-                try:
-                    sound = AudioSegment.from_file(song,format='mp3').export(name,format='wav')
-                    print(f'{song} -> {name}')
-                except:
-                    print('mp3 to wav ERROR')
-            else:
-                name = name + '.mp3'
-                try:
-                    print(f'{song} -> {name}')
-                    sound = AudioSegment.from_file(song,format='wav').export(name,format='mp3')
-                except:
-                    print('wav to mp3 ERROR')
-
+            convert_file(song,f_format)
+    
 
 
 
@@ -220,4 +203,3 @@ if type(check_args()) == list:
         print('No music files detected. Check your files!')
     
     # TODO: first if should be checking the len(files)
-print(check_args())
