@@ -66,9 +66,21 @@ def convert_file(file,new_format):
         except:
             print('An error occurred')
             return False
-    elif file.split('.')[-1] in music_formats and new_format in music_formats:
-        # convert music file_name
-        pass
+    elif file.split('.')[-1] and new_format in music_formats:
+        f_format = file.split('.')[-1]
+        if f_format == 'wav':
+            try:
+                sound = AudioSegment.from_mp3(song)
+                sound = AudioSegment.export(dst, format="wav")
+            except:
+                print('wav to mp3 ERROR')
+        else:
+             try:
+                sound = AudioSegment.from_wav(song)
+                sound = AudioSegment.export(dst, format="mp3")
+            except:
+                print('mp3 to wav ERROR')
+
 
 
 def convert_to_pdf(file_name,files_list):
@@ -198,7 +210,8 @@ if type(check_args()) == list:
             new_size = float(check_args()[-1])
             resize_files_by_ratio(todo[1],new_size)
     elif todo[1] == '-am':
-        print(check_args())
+        convert_music(todo[-1])
+    
     # TODO: first if should be checking the len(files)
     #
 print(check_args())
