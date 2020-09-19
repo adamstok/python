@@ -157,5 +157,13 @@ if type(check_args()) == list:
         print('No files detected')
     elif check_input_files(todo[0]) and todo[1] in allowed_output:
         convert_file(todo[0],todo[1])
+    elif todo[0] == '-r':
+        try:
+            new_size = tuple(todo[-1].split('x'))
+            resize_files_by_wh(todo[1],new_size)
+        except:
+            new_size = float(check_args()[-1])
+            resize_files_by_ratio(todo[1],new_size)
+
     # TODO: first if should be checking the len(files)
 
