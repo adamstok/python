@@ -1,6 +1,7 @@
 from PIL import Image
 import sys
 import os
+from pydub import AudioSegment
 
 def check_newsize(ar):
     try:
@@ -34,6 +35,8 @@ def check_args():
     elif check_input_files(listed[1]) and listed[2] in allowed_output:
         return listed[1:]
     elif len(listed) == 4 and listed[1] == '-r' and check_input_files(listed[2]) and check_newsize(listed[3]):
+        return listed[1:]
+    elif len(listed) == 3 and listed[1] == '-am' and listed[2] in music_formats:
         return listed[1:]
     else:
         print(help_msg)
@@ -116,20 +119,47 @@ def resize_files_by_ratio(file, new_size):
         return False
 
 
+
+def convert_music(f,f_format):
+    if f == '':
+        music_files = [x for x in list(filter(lambda x: x.split('.')[-1] in music_formats, os.listdir('.'))) if x.split('.')[-1] != f_format]
+        if len(music_files) == 0:
+            print('Nothing to do ! Check the files')
+            return False
+        else:
+            for song in music_files:
+                name = song.split('.')[0]
+                dst = f'converted_{name}.{f_format}'
+                if f_format == 'wav':
+                    try:
+                        sound = AudioSegment.from_mp3(song)
+                        sound = AudioSegment.export(dst, format="wav")
+                    except:
+                        print('wav to mp3 ERROR')
+                else:
+                     try:
+                        sound = AudioSegment.from_wav(song)
+                        sound = AudioSegment.export(dst, format="mp3")
+                    except:
+                        print('mp3 to wav ERROR')
+
+
+
 help_msg =  """
 Allowed files conversions: JPEG, PNG, BMP <=> JPEG, PNG, BMP 
 Usage:
     python convert.py -ai <new_fileformat>  (convert all files in the directory to the desired format)
+    python convert.py -am <new_fileformat> (convert all music files in the current directory)
     python convert.py -ap  (convert all imgages to one pdf)
     python convert.py -ar <new_size> (resize all images with ex: new_size = 200x300 or ex: 0.5 in case of ratio)
     python convert.py -r <file> <new_size> (resize image with ex: new_size = 200x300, or 0.5 for the ratio)
     python convert.py <file1> <file_format> (convert file1 to formatted file1 )
 """
 # TODO: options: convert music, docs - excel
-
+music_formats = ['wav','mp3']
 allowed = ['jpeg','png','bmp'] 
 allowed_output = ['jpeg','png','bmp','pdf'] 
-arguments = ['-ai','-r','-ap','-ar']
+arguments = ['-ai','-r','-am','-ap','-ar']
 files = list(filter(lambda x: check_input_files(x), os.listdir('.')))
 
 if type(check_args()) == list:
@@ -163,4 +193,8 @@ if type(check_args()) == list:
         except:
             new_size = float(check_args()[-1])
             resize_files_by_ratio(todo[1],new_size)
+    elif todo[1] == '-am':
+        print(check_args())
     # TODO: first if should be checking the len(files)
+    #
+print(check_args())
