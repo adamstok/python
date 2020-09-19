@@ -70,16 +70,22 @@ def convert_file(file,new_format):
         f_format = file.split('.')[-1]
         if f_format == 'wav':
             try:
-                sound = AudioSegment.from_mp3(file)
-                sound = AudioSegment.export(new_name, format="wav")
+                # sound = AudioSegment.from_mp3(file)
+                # sound = AudioSegment.export(new_name, format="wav")
+                # print(f'{file} -> {new_name}')
+                sound = AudioSegment.from_file(file,format='mp3').export(new_name,format='wav')
                 print(f'{file} -> {new_name}')
+
             except:
                 print('mp3 to wav ERROR')
         else:
             try:
-                sound = AudioSegment.from_wav(file)
-                sound = AudioSegment.export(new_name, format="mp3")
+                # sound = AudioSegment.from_wav(file)
+                # sound = AudioSegment.export(new_name, format="mp3")
+                # print(f'{file} -> {new_name}')
+                sound = AudioSegment.from_file(file,format='wav').export(new_name,format='mp3')
                 print(f'{file} -> {new_name}')
+
             except:
                 print('wav to mp3 ERROR')
 
@@ -148,15 +154,21 @@ def convert_music(f_format):
             name = song.split('.')[0]
             dst = f'converted_{name}.{f_format}'
             if f_format == 'wav':
+                name = name + '.wav'
                 try:
-                    sound = AudioSegment.from_mp3(song)
-                    sound = AudioSegment.export(dst, format="wav")
+                    # sound = AudioSegment.from_mp3(song)
+                    # sound = AudioSegment.export(dst, format="wav")
+                    sound = AudioSegment.from_file(song,format='mp3').export(name,format='wav')
+                    print(f'{song} -> {name}')
                 except:
                     print('mp3 to wav ERROR')
             else:
+                name = name + '.mp3'
                 try:
-                    sound = AudioSegment.from_wav(song)
-                    sound = AudioSegment.export(dst, format="mp3")
+                    # sound = AudioSegment.from_wav(song)
+                    # sound = AudioSegment.export(dst, format="mp3")
+                    print(f'{song} -> {name}')
+                    sound = AudioSegment.from_file(song,format='wav').export(name,format='mp3')
                 except:
                     print('wav to mp3 ERROR')
 
@@ -173,7 +185,7 @@ Usage:
     python convert.py -r <file> <new_size> (resize image with ex: new_size = 200x300, or 0.5 for the ratio)
     python convert.py <file1> <file_format> (convert file1 to formatted file1 )
 """
-# TODO: options: convert music, docs - excel
+# TODO: options: convert music, docs - excel, PDF file -> make it smaller 
 music_formats = ['wav','mp3']
 allowed = ['jpeg','png','bmp'] 
 allowed_output = ['jpeg','png','bmp','pdf'] 
@@ -204,8 +216,7 @@ if type(check_args()) == list:
     elif todo[0] == '-ap' and len(files) == 0:
         print('No files detected')
     elif check_input_files(todo[0]) and (todo[1] in allowed_output or todo[1] in music_formats):
-        if todo[1] in allowed_output:
-            convert_file(todo[0],todo[1])
+        convert_file(todo[0],todo[1])
     elif todo[0] == '-r':
         try:
             new_size = tuple([int(x) for x in check_args()[-1].split('x')])
