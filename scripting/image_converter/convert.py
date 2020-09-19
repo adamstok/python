@@ -159,11 +159,10 @@ if type(check_args()) == list:
         convert_file(todo[0],todo[1])
     elif todo[0] == '-r':
         try:
-            new_size = tuple(todo[-1].split('x'))
+            new_size = tuple([int(x) for x in check_args()[-1].split('x')])
             resize_files_by_wh(todo[1],new_size)
         except:
             new_size = float(check_args()[-1])
             resize_files_by_ratio(todo[1],new_size)
 
     # TODO: first if should be checking the len(files)
-
