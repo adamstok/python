@@ -58,13 +58,17 @@ def convert_file(file,new_format):
     if new_name in os.listdir('.'):
         print(f'Not converting {new_name}. The file already exist')
         return False
-    try:
-        Image.open(file).save(new_name)
-        print(f'{file} -> {new_name}')
-        return True
-    except:
-        print('An error occurred')
-        return False
+    if file.split('.')[-1] in allowed and new_format in allowed_output:
+        try:
+            Image.open(file).save(new_name)
+            print(f'{file} -> {new_name}')
+            return True
+        except:
+            print('An error occurred')
+            return False
+    elif file.split('.')[-1] in music_formats and new_format in music_formats:
+        # convert music file_name
+        pass
 
 
 def convert_to_pdf(file_name,files_list):
@@ -120,28 +124,28 @@ def resize_files_by_ratio(file, new_size):
 
 
 
-def convert_music(f,f_format):
-    if f == '':
-        music_files = [x for x in list(filter(lambda x: x.split('.')[-1] in music_formats, os.listdir('.'))) if x.split('.')[-1] != f_format]
-        if len(music_files) == 0:
-            print('Nothing to do ! Check the files')
-            return False
-        else:
-            for song in music_files:
-                name = song.split('.')[0]
-                dst = f'converted_{name}.{f_format}'
-                if f_format == 'wav':
-                    try:
-                        sound = AudioSegment.from_mp3(song)
-                        sound = AudioSegment.export(dst, format="wav")
-                    except:
-                        print('wav to mp3 ERROR')
-                else:
-                     try:
-                        sound = AudioSegment.from_wav(song)
-                        sound = AudioSegment.export(dst, format="mp3")
-                    except:
-                        print('mp3 to wav ERROR')
+def convert_music(f_format):
+    music_files = [x for x in list(filter(lambda x: x.split('.')[-1] in music_formats, os.listdir('.'))) if x.split('.')[-1] != f_format]
+    if len(music_files) == 0:
+        print('Nothing to do ! Check the files')
+        return False
+    else:
+        for song in music_files:
+            name = song.split('.')[0]
+            dst = f'converted_{name}.{f_format}'
+            if f_format == 'wav':
+                try:
+                    sound = AudioSegment.from_mp3(song)
+                    sound = AudioSegment.export(dst, format="wav")
+                except:
+                    print('wav to mp3 ERROR')
+            else:
+                 try:
+                    sound = AudioSegment.from_wav(song)
+                    sound = AudioSegment.export(dst, format="mp3")
+                except:
+                    print('mp3 to wav ERROR')
+
 
 
 
