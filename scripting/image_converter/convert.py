@@ -32,7 +32,7 @@ def check_args():
         return False
     elif (listed[1] == '-ai' and listed[2] in allowed) or (listed[1] == '-ar' and type(check_newsize(listed[2])) == list):
         return listed[1:]
-    elif check_input_files(listed[1]) and listed[2] in allowed_output:
+    elif check_input_files(listed[1]) and (listed[2] in allowed_output or listed[2] in music_formats):
         return listed[1:]
     elif len(listed) == 4 and listed[1] == '-r' and check_input_files(listed[2]) and check_newsize(listed[3]):
         return listed[1:]
@@ -46,7 +46,7 @@ def check_args():
 def check_input_files(file):
     try:
         file_format = file.split('.')[-1].lower()
-        if file_format in allowed:
+        if file_format in allowed or file_format in music_formats:
             return True
     except:
         return False
@@ -200,8 +200,9 @@ if type(check_args()) == list:
         convert_to_pdf(file_name,files_list)
     elif todo[0] == '-ap' and len(files) == 0:
         print('No files detected')
-    elif check_input_files(todo[0]) and todo[1] in allowed_output:
-        convert_file(todo[0],todo[1])
+    elif check_input_files(todo[0]) and (todo[1] in allowed_output or todo[1] in music_formats):
+        if todo[1] in allowed_output:
+            convert_file(todo[0],todo[1])
     elif todo[0] == '-r':
         try:
             new_size = tuple([int(x) for x in check_args()[-1].split('x')])
