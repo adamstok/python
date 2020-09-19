@@ -58,7 +58,7 @@ def convert_file(file,new_format):
     if new_name in os.listdir('.'):
         print(f'Not converting {new_name}. The file already exist')
         return False
-    if file.split('.')[-1] in allowed and new_format in allowed_output:
+    elif file.split('.')[-1] in allowed and new_format in allowed_output:
         try:
             Image.open(file).save(new_name)
             print(f'{file} -> {new_name}')
@@ -66,20 +66,22 @@ def convert_file(file,new_format):
         except:
             print('An error occurred')
             return False
-    elif file.split('.')[-1] and new_format in music_formats:
+    elif file.split('.')[-1] in music_formats and new_format in music_formats:
         f_format = file.split('.')[-1]
         if f_format == 'wav':
             try:
-                sound = AudioSegment.from_mp3(song)
-                sound = AudioSegment.export(dst, format="wav")
-            except:
-                print('wav to mp3 ERROR')
-        else:
-            try:
-                sound = AudioSegment.from_wav(song)
-                sound = AudioSegment.export(dst, format="mp3")
+                sound = AudioSegment.from_mp3(file)
+                sound = AudioSegment.export(new_name, format="wav")
+                print(f'{file} -> {new_name}')
             except:
                 print('mp3 to wav ERROR')
+        else:
+            try:
+                sound = AudioSegment.from_wav(file)
+                sound = AudioSegment.export(new_name, format="mp3")
+                print(f'{file} -> {new_name}')
+            except:
+                print('wav to mp3 ERROR')
 
 
 
@@ -150,13 +152,13 @@ def convert_music(f_format):
                     sound = AudioSegment.from_mp3(song)
                     sound = AudioSegment.export(dst, format="wav")
                 except:
-                    print('wav to mp3 ERROR')
+                    print('mp3 to wav ERROR')
             else:
                 try:
                     sound = AudioSegment.from_wav(song)
                     sound = AudioSegment.export(dst, format="mp3")
                 except:
-                    print('mp3 to wav ERROR')
+                    print('wav to mp3 ERROR')
 
 
 
@@ -217,4 +219,4 @@ if type(check_args()) == list:
         print('No music files detected. Check your files!')
     
     # TODO: first if should be checking the len(files)
-    #
+print(check_args())
