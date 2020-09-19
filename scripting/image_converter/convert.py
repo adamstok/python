@@ -75,7 +75,7 @@ def convert_file(file,new_format):
             except:
                 print('wav to mp3 ERROR')
         else:
-             try:
+            try:
                 sound = AudioSegment.from_wav(song)
                 sound = AudioSegment.export(dst, format="mp3")
             except:
@@ -152,7 +152,7 @@ def convert_music(f_format):
                 except:
                     print('wav to mp3 ERROR')
             else:
-                 try:
+                try:
                     sound = AudioSegment.from_wav(song)
                     sound = AudioSegment.export(dst, format="mp3")
                 except:
@@ -177,6 +177,7 @@ allowed = ['jpeg','png','bmp']
 allowed_output = ['jpeg','png','bmp','pdf'] 
 arguments = ['-ai','-r','-am','-ap','-ar']
 files = list(filter(lambda x: check_input_files(x), os.listdir('.')))
+musicfiles = list(filter(lambda x: x.split('.')[-1] in music_formats, os.listdir('.')))
 
 if type(check_args()) == list:
     todo = check_args()
@@ -210,9 +211,10 @@ if type(check_args()) == list:
         except:
             new_size = float(check_args()[-1])
             resize_files_by_ratio(todo[1],new_size)
-    elif todo[1] == '-am':
+    elif todo[0] == '-am' and len(musicfiles) > 0:
         convert_music(todo[-1])
+    elif todo[0] == '-am' and len(musicfiles) == 0:
+        print('No music files detected. Check your files!')
     
     # TODO: first if should be checking the len(files)
     #
-print(check_args())
