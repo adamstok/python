@@ -12,7 +12,6 @@ def check_newsize(ar):
                 if float(ar):
                     return list(ar)
             except:
-                print(help_msg)
                 return False
     except:
         print(help_msg)
@@ -164,5 +163,4 @@ if type(check_args()) == list:
         except:
             new_size = float(check_args()[-1])
             resize_files_by_ratio(todo[1],new_size)
-
     # TODO: first if should be checking the len(files)
